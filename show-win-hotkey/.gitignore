@@ -1,0 +1,6 @@
+test.spec
+
+# 打包文件
+venv
+dist
+build
