@@ -1,12 +1,10 @@
-// import 'antd/dist/antd.css'
-import "antd/lib/skeleton/style/index.less"
+import 'antd/dist/antd.css' // vite 的自定义导入不好用，漏了挺多
 import "./App.less"
 import { io } from "socket.io-client"
 import { Card, Input } from "antd"
 import { getTodayStatus, getWinStatus } from "./service"
 import { useRequest } from "ahooks"
 import { useEffect, useMemo, useState } from "react"
-import 'antd/es/button/style/index.css'
 
 const socket = io()
 
@@ -78,7 +76,7 @@ function App() {
     <div className="App">
       <Card title="搜索" className="search">
         <div className="input-wrapper">
-          <Input.Search prefix='bing' enterButton={true} onSearch={onSearch('bing')}/>
+          <Input.Search prefix='bing' autoFocus enterButton={true} onSearch={onSearch('bing')}/>
         </div>
         <div className="input-wrapper">
           <Input.Search prefix='baidu' enterButton={true} onSearch={onSearch('baidu')}/>
