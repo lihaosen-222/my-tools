@@ -2,7 +2,7 @@ const { getTodayStatus, signIn, drawLottery } = require("./service");
 const { tLog } = require("../utils");
 
 // 第一次执行
-trySignIn();
+// trySignIn();
 
 // 每 30 分钟执行一次
 setInterval(() => {

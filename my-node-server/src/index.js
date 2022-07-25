@@ -1,4 +1,5 @@
 require('./signIn')
+require('./crawler')
 const path = require('path')
 const Koa = require('koa')
 const koaStatic = require('koa-static')
