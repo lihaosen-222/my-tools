@@ -3,6 +3,7 @@ const cheerio = require('cheerio')
 const sizeOf = require('image-size')
 const fs = require('fs')
 const path = require('path')
+const { setRegular } = require('../utils/index')
 
 function delay(time) {
   return new Promise((resolve, reject) => {
@@ -28,8 +29,7 @@ function getResizedImg(url) {
   })
 }
 
-async function ranking() {
-  // await delay(1000 * 60 * 3)
+async function refreshImg() {
   const { data: html } = await getRankHTML()
   const $ = cheerio.load(html)
   const hrefs = $('.illust a').map(function () {
@@ -87,4 +87,9 @@ function convertImgURL(imgURL) {
     .replace(/_master1200.jpg\?x-oss-process=image\/resize,m_fill,w_1000/, '')
 }
 
-ranking()
+
+// 每日一点更新
+setRegular(1, ()=>{
+  refreshImg()
+}) 
+
