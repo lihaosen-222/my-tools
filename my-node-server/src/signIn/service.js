@@ -1,5 +1,5 @@
 const axios = require("axios");
-const secret = require("../../secret");
+const secret = require("../secret");
 
 function getTodayStatus() {
   return axios({

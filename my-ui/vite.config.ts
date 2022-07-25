@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import vitePluginImp from "vite-plugin-imp";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import vitePluginImp from 'vite-plugin-imp'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,7 +10,7 @@ export default defineConfig({
       // 按需导入 antd 样式
       libList: [
         {
-          libName: "antd",
+          libName: 'antd',
           style: (name) => `antd/lib/${name}/style/index.less`,
         },
       ],
@@ -27,12 +27,13 @@ export default defineConfig({
   server: {
     proxy: {
       // 测试时用 3000， 运行时用相对
-      "/api": {
-        target: "http://localhost:8007/",
+      '/api': {
+        target: 'http://localhost:8007/',
       },
-      "/socket.io": { // socket.io 默认走这个地址，要代理这个
-        target: "http://localhost:8007/",
+      '/socket.io': {
+        // socket.io 默认走这个地址，要代理这个
+        target: 'http://localhost:8007/',
       },
     },
   },
-});
+})

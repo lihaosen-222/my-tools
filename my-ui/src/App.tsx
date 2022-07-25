@@ -1,10 +1,11 @@
 import 'antd/dist/antd.css' // vite 的自定义导入不好用，漏了挺多
-import "./App.less"
-import { io } from "socket.io-client"
-import { Card, Input } from "antd"
-import { getTodayStatus, getWinStatus } from "./service"
-import { useRequest } from "ahooks"
-import { useEffect, useMemo, useState } from "react"
+import './App.less'
+import { io } from 'socket.io-client'
+import { Input } from 'antd'
+import Card from './components/Card'
+import { getTodayStatus, getWinStatus } from './service'
+import { useRequest } from 'ahooks'
+import { useEffect, useMemo, useState } from 'react'
 
 const socket = io()
 
@@ -15,13 +16,13 @@ function App() {
     return win.map((item: any, index: number) => {
       return (
         <div key={index}>
-          {index}:{" "}
+          {index}:{' '}
           {item?.hwnd ? (
             <>
               绑定 <b>{item?.name}</b>
             </>
           ) : (
-            "暂未绑定"
+            '暂未绑定'
           )}
         </div>
       )
@@ -46,7 +47,7 @@ function App() {
 
   // 之后添加一个 clean up 函数
   useEffect(() => {
-    socket.on("update-win", (list) => {
+    socket.on('update-win', (list) => {
       setWin(list)
     })
     run()
@@ -54,7 +55,7 @@ function App() {
 
   type serachType = 'bing' | 'baidu' | 'google'
   function onSearch(type: serachType) {
-    let baseUrl = '' 
+    let baseUrl = ''
     switch (type) {
       case 'bing':
         baseUrl = 'https://www.bing.com/search?q='
@@ -67,7 +68,7 @@ function App() {
         break
     }
 
-    return function (content: string){
+    return function (content: string) {
       window.location.href = baseUrl + content
     }
   }
@@ -76,21 +77,34 @@ function App() {
     <div className="App">
       <Card title="搜索" className="search">
         <div className="input-wrapper">
-          <Input.Search prefix='bing' autoFocus enterButton={true} onSearch={onSearch('bing')}/>
+          <Input.Search
+            prefix="bing"
+            autoFocus
+            enterButton={true}
+            onSearch={onSearch('bing')}
+          />
         </div>
         <div className="input-wrapper">
-          <Input.Search prefix='baidu' enterButton={true} onSearch={onSearch('baidu')}/>
+          <Input.Search
+            prefix="baidu"
+            enterButton={true}
+            onSearch={onSearch('baidu')}
+          />
         </div>
         <div className="input-wrapper">
-          <Input.Search prefix='google' enterButton={true} onSearch={onSearch('google')}/>
+          <Input.Search
+            prefix="google"
+            enterButton={true}
+            onSearch={onSearch('google')}
+          />
         </div>
       </Card>
-      <Card title="掘金签到" className="signIn" loading={signInLoading}>
+      <Card title="掘金签到" className="signIn">
         今日
-        {todayStatus ? "已" : "未"}
+        {todayStatus ? '已' : '未'}
         签到
       </Card>
-      <Card title="界面热键" className="winHotKey" loading={winLoading}>
+      <Card title="界面热键" className="winHotKey">
         {winRender}
       </Card>
     </div>
