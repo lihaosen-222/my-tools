@@ -99,12 +99,12 @@ function App() {
           />
         </div>
       </Card>
-      <Card title="掘金签到" className="signIn">
+      <Card title="掘金签到" className="signIn" loading={signInLoading}>
         今日
         {todayStatus ? '已' : '未'}
         签到
       </Card>
-      <Card title="界面热键" className="winHotKey">
+      <Card title="界面热键" className="winHotKey" loading={winLoading}>
         {winRender}
       </Card>
     </div>
