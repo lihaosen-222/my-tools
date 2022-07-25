@@ -74,6 +74,7 @@ async function downLoadPicture(href) {
     const response = await axios.get(href, { responseType: 'stream' })
     await response.data.pipe(fs.createWriteStream(target_path))
     console.log('写入成功')
+    setCss(href)
     return Promise.resolve()
   } catch (e) {
     console.log('写入数据失败')
@@ -87,9 +88,22 @@ function convertImgURL(imgURL) {
     .replace(/_master1200.jpg\?x-oss-process=image\/resize,m_fill,w_1000/, '')
 }
 
+function setCss(url) {
+  const target_path = path.resolve(__dirname, `../../public/todayBG.css`)
+
+  try {
+    const data = fs.writeFileSync(
+      target_path,
+      `body {background-image: url(${url});}`
+    )
+    //文件写入成功。
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 
 // 每日一点更新
-setRegular(1, ()=>{
+setRegular(1, () => {
   refreshImg()
-}) 
-
+})

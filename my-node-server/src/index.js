@@ -16,7 +16,9 @@ app.use(
   koaStatic(path.join(__dirname, '../public'), {
     setHeaders(res, path, stats) {
       // 12小时的缓存
-      res.setHeader('cache-control', `max-age=${60 * 60 * 12}`)
+      res.setHeader('Cache-Control', `max-age=${60 * 60 * 12}`)
+
+      // res.setHeader('Cache-Control', `max-age=${60 * 60 * 12}`)
       const ifModifiedSince = res.req.headers['if-modified-since']
       const lastModified = stats.mtime.toGMTString()
       if (ifModifiedSince === lastModified) {
