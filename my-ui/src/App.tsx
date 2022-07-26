@@ -71,8 +71,8 @@ function App() {
         break
     }
 
-    return function (content: string) {
-      window.location.href = baseUrl + content
+    return function (e: any) {
+      window.location.href = baseUrl + e.target.value
     }
   }
 
@@ -80,32 +80,28 @@ function App() {
     <div className="App">
       <Card title="搜索" className="search">
         <div className="input-wrapper">
-          <Input.Search
+          <Input
             prefix="bing"
             autoFocus
-            enterButton={true}
-            onSearch={onSearch('bing')}
+            onPressEnter={onSearch('bing')}
           />
         </div>
         <div className="input-wrapper">
-          <Input.Search
+          <Input
             prefix="baidu"
-            enterButton={true}
-            onSearch={onSearch('baidu')}
+            onPressEnter={onSearch('baidu')}
           />
         </div>
         <div className="input-wrapper">
-          <Input.Search
+          <Input
             prefix="google"
-            enterButton={true}
-            onSearch={onSearch('google')}
+            onPressEnter={onSearch('google')}
           />
         </div>
         <div className="input-wrapper">
-          <Input.Search
+          <Input
             prefix="juejin"
-            enterButton={true}
-            onSearch={onSearch('juejin')}
+            onPressEnter={onSearch('juejin')}
           />
         </div>
       </Card>
