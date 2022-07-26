@@ -53,7 +53,7 @@ function App() {
     run()
   }, [])
 
-  type serachType = 'bing' | 'baidu' | 'google'
+  type serachType = 'bing' | 'baidu' | 'google' | 'juejin'
   function onSearch(type: serachType) {
     let baseUrl = ''
     switch (type) {
@@ -65,6 +65,9 @@ function App() {
         break
       case 'google':
         baseUrl = 'https://www.google.com/search?q='
+        break
+      case 'juejin':
+        baseUrl = 'https://juejin.cn/search?query='
         break
     }
 
@@ -96,6 +99,13 @@ function App() {
             prefix="google"
             enterButton={true}
             onSearch={onSearch('google')}
+          />
+        </div>
+        <div className="input-wrapper">
+          <Input.Search
+            prefix="juejin"
+            enterButton={true}
+            onSearch={onSearch('juejin')}
           />
         </div>
       </Card>
