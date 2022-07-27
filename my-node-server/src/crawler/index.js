@@ -102,6 +102,8 @@ function setCss(url) {
   }
 }
 
+// 启动时更新一次
+refreshImg()
 
 // 每日一点更新
 setRegular(1, () => {

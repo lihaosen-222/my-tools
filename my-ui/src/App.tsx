@@ -88,6 +88,12 @@ function App() {
         </div>
         <div className="input-wrapper">
           <Input
+            prefix="juejin"
+            onPressEnter={onSearch('juejin')}
+          />
+        </div>
+        <div className="input-wrapper">
+          <Input
             prefix="baidu"
             onPressEnter={onSearch('baidu')}
           />
@@ -96,12 +102,6 @@ function App() {
           <Input
             prefix="google"
             onPressEnter={onSearch('google')}
-          />
-        </div>
-        <div className="input-wrapper">
-          <Input
-            prefix="juejin"
-            onPressEnter={onSearch('juejin')}
           />
         </div>
       </Card>
