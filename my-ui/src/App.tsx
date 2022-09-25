@@ -31,7 +31,7 @@ function App() {
 
   const { data: todayStatus, loading: signInLoading } = useRequest(async () => {
     const res = await getTodayStatus()
-    if(!res?.data?.data) message.error('今日签到未成功！')
+    if (!res?.data?.data) message.error('今日签到未成功！')
     return res?.data?.data
   })
 
@@ -46,11 +46,10 @@ function App() {
     }
   )
 
-  const runSetBackground = useCallback(async function(e: any){
+  const runSetBackground = useCallback(async function (e: any) {
     await setBackground(e.target.value)
     message.success('修改成功!')
-  },[])
-
+  }, [])
 
   // 之后添加一个 clean up 函数
   useEffect(() => {
@@ -87,29 +86,16 @@ function App() {
     <div className="App">
       <Card title="搜索" className="search">
         <div className="input-wrapper">
-          <Input
-            prefix="bing"
-            autoFocus
-            onPressEnter={onSearch('bing')}
-          />
+          <Input prefix="bing" autoFocus onPressEnter={onSearch('bing')} />
         </div>
         <div className="input-wrapper">
-          <Input
-            prefix="juejin"
-            onPressEnter={onSearch('juejin')}
-          />
+          <Input prefix="juejin" onPressEnter={onSearch('juejin')} />
         </div>
         <div className="input-wrapper">
-          <Input
-            prefix="baidu"
-            onPressEnter={onSearch('baidu')}
-          />
+          <Input prefix="baidu" onPressEnter={onSearch('baidu')} />
         </div>
         <div className="input-wrapper">
-          <Input
-            prefix="google"
-            onPressEnter={onSearch('google')}
-          />
+          <Input prefix="google" onPressEnter={onSearch('google')} />
         </div>
       </Card>
       <Card title="掘金签到" className="signIn" loading={signInLoading}>
@@ -121,10 +107,7 @@ function App() {
         {winRender}
       </Card>
       <Card title="更改当日背景">
-          <Input
-            prefix="输入 URL"
-            onPressEnter={runSetBackground}
-          />
+        <Input prefix="输入 URL" onPressEnter={runSetBackground} />
       </Card>
     </div>
   )

@@ -21,7 +21,7 @@ function setRegular(targetHour, fn) {
       ? targetSeconds - nowSeconds
       : targetSeconds + 24 * 3600 - nowSeconds
 
-  setTimeout(()=>{
+  setTimeout(() => {
     fn()
     setRegular(targetHour, fn) //之后每天调用一次
   }, intervalSeconds * 1000)
@@ -29,8 +29,5 @@ function setRegular(targetHour, fn) {
 
 module.exports = {
   tLog,
-  setRegular
+  setRegular,
 }
-
-
-
