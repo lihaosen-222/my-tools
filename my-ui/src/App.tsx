@@ -31,6 +31,7 @@ function App() {
 
   const { data: todayStatus, loading: signInLoading } = useRequest(async () => {
     const res = await getTodayStatus()
+    if(!res?.data?.data) message.error('今日签到未成功！')
     return res?.data?.data
   })
 
