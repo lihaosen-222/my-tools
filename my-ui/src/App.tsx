@@ -1,11 +1,11 @@
 import 'antd/dist/antd.css' // vite 的自定义导入不好用，漏了挺多
 import './App.less'
 import { io } from 'socket.io-client'
-import { Input } from 'antd'
+import { Input, message } from 'antd'
 import Card from './components/Card'
-import { getTodayStatus, getWinStatus } from './service'
+import { getTodayStatus, getWinStatus, setBackground } from './service'
 import { useRequest } from 'ahooks'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const socket = io()
 
@@ -45,13 +45,19 @@ function App() {
     }
   )
 
+  const runSetBackground = useCallback(async function(e: any){
+    await setBackground(e.target.value)
+    message.success('修改成功!')
+  },[])
+
+
   // 之后添加一个 clean up 函数
   useEffect(() => {
     socket.on('update-win', (list) => {
       setWin(list)
     })
     run()
-  }, [])
+  }, [run])
 
   type serachType = 'bing' | 'baidu' | 'google' | 'juejin'
   function onSearch(type: serachType) {
@@ -112,6 +118,12 @@ function App() {
       </Card>
       <Card title="界面热键" className="winHotKey" loading={winLoading}>
         {winRender}
+      </Card>
+      <Card title="更改当日背景">
+          <Input
+            prefix="输入 URL"
+            onPressEnter={runSetBackground}
+          />
       </Card>
     </div>
   )

@@ -8,3 +8,6 @@ export async function getWinStatus(){
   return axios.get('/api/getWin')
 }
 
+export async function setBackground(url: string){
+  return axios.post('/api/setBackground', {url})
+}

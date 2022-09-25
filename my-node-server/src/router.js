@@ -1,5 +1,7 @@
 const Router = require("koa-router");
 const bodyPaser = require("koa-bodyparser");
+const fs = require('fs')
+const path = require('path')
 const { getTodayStatus } = require("./signIn/service");
 
 function routerInit(app, io) {
@@ -19,6 +21,21 @@ function routerInit(app, io) {
     win?.shift(); // 丢去 null
     ctx.body = "success";
     io.emit("update-win", win);
+  });
+
+  router.post("/api/setBackground", async (ctx) => {
+    const { url } = ctx.request.body
+    
+    try {
+      fs.writeFileSync(
+        path.resolve(__dirname, `../public/todayBG.css`),
+        `body {background-image: url(${url});}`
+      )
+      ctx.body = "success";
+    } catch (err) {
+      console.error(err)
+      ctx.body = err;
+    }
   });
 
   router.get("/api/getWin", async (ctx) => {
