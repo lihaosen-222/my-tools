@@ -1,33 +1,19 @@
 import 'antd/dist/antd.css' // vite 的自定义导入不好用，漏了挺多
 import './App.less'
 import { io } from 'socket.io-client'
-import { Input, message } from 'antd'
+import { Input, InputRef, message } from 'antd'
 import Card from './components/Card'
 import { getTodayStatus, getWinStatus, setBackground } from './service'
 import { useRequest } from 'ahooks'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
+type serachType = 'bing' | 'baidu' | 'google' | 'juejin'
 
 const socket = io()
 
 function App() {
   const [win, setWin] = useState([])
-
-  const winRender = useMemo(() => {
-    return win.map((item: any, index: number) => {
-      return (
-        <div key={index}>
-          {index}:{' '}
-          {item?.hwnd ? (
-            <>
-              绑定 <b>{item?.name}</b>
-            </>
-          ) : (
-            '暂未绑定'
-          )}
-        </div>
-      )
-    })
-  }, [win])
+  const ref = useRef<InputRef>(null)
 
   const { data: todayStatus, loading: signInLoading } = useRequest(async () => {
     const res = await getTodayStatus()
@@ -46,9 +32,27 @@ function App() {
     }
   )
 
+  const winRender = useMemo(() => {
+    return win.map((item: any, index: number) => {
+      return (
+        <div key={index}>
+          {index}:{' '}
+          {item?.hwnd ? (
+            <>
+              绑定 <b>{item?.name}</b>
+            </>
+          ) : (
+            '暂未绑定'
+          )}
+        </div>
+      )
+    })
+  }, [win])
+
   const runSetBackground = useCallback(async function (e: any) {
     await setBackground(e.target.value)
     message.success('修改成功!')
+    if(ref.current?.input?.value) ref.current.input.value = ''
   }, [])
 
   // 之后添加一个 clean up 函数
@@ -59,7 +63,7 @@ function App() {
     run()
   }, [run])
 
-  type serachType = 'bing' | 'baidu' | 'google' | 'juejin'
+  
   function onSearch(type: serachType) {
     let baseUrl = ''
     switch (type) {
@@ -107,7 +111,7 @@ function App() {
         {winRender}
       </Card>
       <Card title="更改当日背景">
-        <Input prefix="输入 URL" onPressEnter={runSetBackground} />
+        <Input prefix="输入 URL" ref={ref} onPressEnter={runSetBackground} />
       </Card>
     </div>
   )
