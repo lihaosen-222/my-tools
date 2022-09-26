@@ -5,7 +5,7 @@ function tLog(...args) {
 }
 
 function setRegular(targetHour, fn) {
-  var timeInterval, nowTime, nowSeconds, targetSeconds
+  var nowTime, nowSeconds, targetSeconds
 
   nowTime = new Date()
   // 计算当前时间的秒数
@@ -27,7 +27,12 @@ function setRegular(targetHour, fn) {
   }, intervalSeconds * 1000)
 }
 
+function delay(time) {
+  return new Promise((resolve) => setInterval(() => resolve(), time))
+}
+
 module.exports = {
   tLog,
   setRegular,
+  delay
 }
