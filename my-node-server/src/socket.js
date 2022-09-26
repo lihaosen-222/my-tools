@@ -1,11 +1,12 @@
 const { Server: Socket } = require('socket.io')
+const tLog = require('./utils')
 
 function socketInit(server) {
   const io = new Socket(server, { cors: {} })
 
   let i = 0
   io.on('connection', () => {
-    console.log('a user login in', i++)
+    tLog('a user login in', i++)
   })
 
   return io

@@ -1,17 +1,15 @@
-require('./signIn')
-require('./crawler')
 const path = require('path')
 const Koa = require('koa')
 const koaStatic = require('koa-static')
 const http = require('http')
 const socketInit = require('./socket')
 const routerInit = require('./router')
+const refreshBackground = require('./crawler')
+const { setRegular, tLog } = require('./utils')
+const trySignIn = require('./signIn')
 
 const app = new Koa()
-
-// app.listen(...) creat 加 listen 的语法糖
-const server = http.createServer(app.callback())
-
+const server = http.createServer(app.callback()) // app.listen(...) creat 加 listen 的语法糖
 app.use(
   koaStatic(path.join(__dirname, '../public'), {
     setHeaders(res, path, stats) {
@@ -33,6 +31,15 @@ app.use(
 const io = socketInit(server)
 routerInit(app, io)
 
+refreshBackground() // 运行代码时立即更新
+setRegular(1, () => {
+  refreshBackground()
+})
+
+setInterval(() => {
+  trySignIn()
+}, 1000 * 60 * 30)
+
 server.listen(8007, () => {
-  console.log('run at http://localhost:8007/')
+  tLog('run at http://localhost:8007/')
 })

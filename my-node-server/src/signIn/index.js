@@ -1,14 +1,6 @@
 const { getTodayStatus, signIn, drawLottery } = require('./service')
 const { tLog } = require('../utils')
 
-// 第一次执行
-// trySignIn();
-
-// 每 30 分钟执行一次
-setInterval(() => {
-  trySignIn()
-}, 1000 * 60 * 30)
-
 async function trySignIn() {
   const statusData = await (await getTodayStatus()).data
   const { err_no, err_msg, data: status } = statusData
@@ -24,3 +16,5 @@ async function trySignIn() {
     tLog('签到成功')
   }
 }
+
+module.exports = trySignIn

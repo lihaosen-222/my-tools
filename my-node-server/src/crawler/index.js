@@ -3,18 +3,18 @@ const cheerio = require('cheerio')
 const sizeOf = require('image-size')
 const fs = require('fs')
 const path = require('path')
-const { setRegular } = require('../utils/index')
+const { tLog } = require('../utils')
 
-async function refreshImg() {
+async function refreshBackground() {
   const { data: html } = await axios({ url: 'https://www.vilipix.com/ranking' })
-  
+
   const $ = cheerio.load(html)
   const hrefs = $('.illust a').map(function () {
     return $(this).attr('href')
   })
 
   for (let i = 0; i < hrefs.length; i++) {
-    console.log(`正在判断第 ${i} 张图片……`)
+    tLog(`正在判断第 ${i} 张图片……`)
     const url = await isWide(hrefs[i])
     if (url) {
       try {
@@ -55,11 +55,11 @@ async function savePicture(href) {
     )
     const response = await axios.get(href, { responseType: 'stream' })
     await response.data.pipe(fs.createWriteStream(target_path))
-    console.log('写入成功')
+    tLog('写入成功')
     setCss(href)
     return Promise.resolve()
   } catch (e) {
-    console.log('写入数据失败')
+    tLog('写入数据失败')
     return Promise.reject(e)
   }
 }
@@ -80,10 +80,4 @@ function setCss(url) {
   }
 }
 
-// 启动时更新一次
-refreshImg()
-
-// 每日一点更新
-setRegular(1, () => {
-  refreshImg()
-})
+module.exports = refreshBackground
